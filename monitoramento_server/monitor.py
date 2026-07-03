@@ -76,8 +76,8 @@ def checar_armazenamento():
 
 # --- LOOP PRINCIPAL DO SERVIDOR ---
 if __name__ == "__main__":
-    print("🚀 Monitor do Servidor Inicializado com Sucesso dentro da VENV!")
-    enviar_alerta_slack("🟢 Monitor de Recursos Inicializado com Sucesso no Raspberry Pi!")
+    print("Monitor do Servidor Inicializado com Sucesso dentro da VENV!")
+    enviar_alerta_slack("Monitor de Recursos Inicializado com Sucesso no Raspberry Pi!")
 
     while True:
         # 1. Sempre checa os recursos rápidos (CPU e RAM)

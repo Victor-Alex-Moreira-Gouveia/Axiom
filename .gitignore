@@ -1,0 +1,3 @@
+*.env
+*nextcloud_data/
+*postgres_data/

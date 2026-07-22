@@ -18,7 +18,7 @@ mkdir -p "$DIRETORIO_ATUAL/databases"
 
 echo "🗄️ [2/4] Gerando arquivo SQL de restauração automática..."
 # Salva o dump diretamente com o nome de inicialização do Postgres
-docker exec -t DB_Server pg_dump -U user_admin -d tardis_db --clean --if-exists > "$DIRETORIO_ATUAL/databases/01-restore.sql"
+docker exec -t DB_Server pg_dump -U root -d tardis_db --clean --if-exists --no-owner --no-acl > "$DIRETORIO_ATUAL/databases/01-restore.sql"
 
 echo "📂 [3/4] Copiando arquivos do Nextcloud..."
 rsync -avz --delete "$PASTA_PROJETO/nextcloud_data/" "$DIRETORIO_ATUAL/nextcloud_data/"
@@ -26,6 +26,8 @@ rsync -avz --delete "$PASTA_PROJETO/nextcloud_data/" "$DIRETORIO_ATUAL/nextcloud
 echo "📄 [4/4] Copiando arquivos de configuração (.env e compose)..."
 cp "$PASTA_PROJETO/.env" "$DIRETORIO_ATUAL/.env"
 cp "$PASTA_PROJETO/docker-compose.yml" "$DIRETORIO_ATUAL/docker-compose.yml"
+cp "$PASTA_PROJETO/backup.sh" "$DIRETORIO_ATUAL/backup.sh"
+cp "$PASTA_PROJETO/restore.sh" "$DIRETORIO_ATUAL/restore.sh"
 
 # Limpeza de backups antigos (> 30 dias)
 find "$PASTA_BACKUP" -mindepth 1 -maxdepth 1 -type d -name "backup_*" -mtime +30 -exec rm -rf {} +

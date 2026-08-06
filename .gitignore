@@ -1,3 +1,4 @@
 *.env
 *nextcloud_data/
 *postgres_data/
+*tailscale_data/

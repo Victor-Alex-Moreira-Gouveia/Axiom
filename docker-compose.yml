@@ -34,24 +34,6 @@ services:
       - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_ADMIN_PASSWORD}
       # É importante adicionar o IP que o Tailscale vai te dar aos domínios confiáveis depois, 
       # mas podemos deixar genérico por enquanto ou adicionar depois na interface.
-      - NEXTCLOUD_TRUSTED_DOMAINS=${IP_GATEWAY} localhost 127.0.0.1
+      - NEXTCLOUD_TRUSTED_DOMAINS=${IP_GATEWAY} localhost 127.0.0.1 192.168.2.1
     volumes:
       - ./nextcloud_data:/var/www/html:z
-
-  tailscale:
-    image: tailscale/tailscale:latest
-    container_name: tailscale_vpn
-    hostname: rpi4-tardis # Nome que vai aparecer no seu painel do Tailscale
-    restart: unless-stopped
-    env_file:
-      - .env
-    environment:
-      - TS_AUTHKEY=${TS_AUTHKEY}
-      - TS_STATE_DIR=/var/lib/tailscale
-    volumes:
-      - ./tailscale_data:/var/lib/tailscale:z
-      - /dev/net/tun:/dev/net/tun # Necessário para a interface de rede VPN
-    cap_add:
-      - net_admin
-      - sys_module
-    network_mode: host # Permite que o Tailscale gerencie a rede do host (Raspberry Pi)
